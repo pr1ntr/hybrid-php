@@ -1,0 +1,22 @@
+{
+  "name": "starter",
+  "version": "0.5.1",
+  "authors": [
+    "Pavel <d4rklit3@gmail.com>"
+  ],
+  "description": "starter project bower + grunt",
+  "main": "src/js/index.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "bower/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1"
+  }
+}
