@@ -11,7 +11,7 @@ pids
 logs
 results
 
-
+.idea/
 maya/
 ignored_assets/
 node_modules/
@@ -31,3 +31,4 @@ npm-debug.log
 
 .DS_Store
 
+composer.lock
