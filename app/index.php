@@ -3,7 +3,7 @@
 
 
 require '../vendor/autoload.php';
-require '../vendor/util/logging/Logger.php';
+require '../com/util/logging/Logger.php';
 
 
 
