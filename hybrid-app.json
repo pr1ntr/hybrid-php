@@ -1,0 +1,24 @@
+{
+    "name": "hybrid-php",
+    "welcome": "hybrid-php online. all systems green.",
+    "config":
+    {
+        "template" : {
+            "folder" : "/templates",
+            "layout" : "main.twig"
+        },
+        "paths": [
+            {
+                "route": "/",
+                "view": "pages/index.twig",
+                "data" : ""
+            },
+            {
+                "route": "/about",
+                "view": "pages/about.twig",
+                "data" : ""
+            }
+        ]
+    }
+
+}

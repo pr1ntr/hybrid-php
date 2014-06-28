@@ -2,44 +2,54 @@
 <?php 
 
 
-require '../vendor/autoload.php';
-require '../com/util/logging/Logger.php';
+require_once '../vendor/autoload.php';
+require_once '../com/util/logging/Logger.php';
+require_once '../com/DynamicRouter.php';
 
 
 
-$app = new \Slim\Slim();
+$appDataFile = getenv("APP_DATA");
+if(isset($appDataFile)) {
 
-use Handlebars\Handlebars;
-use Handlebars\Loader\FilesystemLoader;
+    $appData = file_get_contents("../$appDataFile");
+    $appData = json_decode($appData);
+    $debug = (getenv("SLIM_MODE") === "development") ? true : false;
 
-$templates = __DIR__."/templates";
-$templateLoader = new FilesystemLoader($templates, [
-   "extension" => "hbs"
-]);
+    $app = new \Slim\Slim();
+    $app->setName($appData->name);
 
-$handlebars = new Handlebars([
-    "loader"=>$templateLoader,
-    "partials_loader"=>$templateLoader
-]);
-
-
-$app->config(array(
-    "debug"=>true
-));
-
-$app->setName("Hybrid PHP");
+    $app->config(array(
+        "debug"=>$debug,
+        "templates.path" =>realpath (__DIR__."/templates"),
+        'view' => new \Slim\Views\Twig()
+    ));
 
 
-$log = $app->getLog();
-$log->setWriter(new Logger());
-$log->setEnabled(true);
+
+    $view = $app->view();
+    $view->parserOptions = array(
+        'debug' => $debug,
+        'cache' => realpath(__DIR__ . '../cache')
+    );
 
 
 
 
 
-$app->get('/' , function () use ($handlebars) {
 
-});
 
-$app->run();
+    $log = $app->getLog();
+    $log->setWriter(new Logger());
+    $log->setEnabled(true);
+
+
+    $router = new DynamicRouter($appData, $app);
+
+
+    $app->run();
+
+}else{
+    echo "no app data";
+}
+
+

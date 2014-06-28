@@ -8,3 +8,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . index.php
 
 SetEnv SLIM_MODE development
+SetEnv APP_DATA "hybrid-app.json"
