@@ -14,13 +14,12 @@ if(isset($appDataFile)) {
     $appData = file_get_contents("../$appDataFile");
     $appData = json_decode($appData);
     $debug = (getenv("SLIM_MODE") === "development") ? true : false;
-
     $app = new \Slim\Slim();
     $app->setName($appData->name);
 
     $app->config(array(
         "debug"=>$debug,
-        "templates.path" =>realpath (__DIR__."/templates"),
+        "templates.path" =>realpath (__DIR__.$appData->config->template->folder),
         'view' => new \Slim\Views\Twig()
     ));
 

@@ -3,9 +3,28 @@
     "welcome": "hybrid-php online. all systems green.",
     "config":
     {
+        "source" : {
+            "css" : "src/stylus/",
+            "js" : "src/app/",
+            "images" : "src/images/",
+            "template" : "src/template/"
+        },
+        "deploy" : {
+            "css" : "app/css/",
+            "js" : "app/js/",
+            "images" : "app/images",
+            "template" : "app/templates"
+        },
+        "cdn" : {
+            "dev": {
+                "cdn_root": "/"
+            },
+            "prod": {
+                "cdn_root": "/"
+            }
+        },
         "template" : {
-            "folder" : "/templates",
-            "layout" : "main.twig"
+            "folder" : "/templates"
         },
         "paths": [
             {

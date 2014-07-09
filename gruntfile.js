@@ -1,11 +1,12 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        app: grunt.file.readJSON('hybrid-app.json'),
         stylus: {
             dist: {
                 options: {
-                    paths: ['src/stylus'],
-                    define: {"cdn_root" : "<%= pkg.deploy.prod.cdn_root %>"},
+                    paths: ['<%= app.config.source.css %>'],
+                    define: {"cdn_root" : "<%= app.config.cdn.prod.cdn_root %>"},
                     use: [
                         
                     ],
@@ -15,75 +16,36 @@ module.exports = function(grunt) {
                 },
                 files: {
                     // 1:1 compile
-                    'dist/css/<%= pkg.name %>.min.css': 'src/stylus/index.styl' // 1:1 compile
+                    '<%= app.config.deploy.css %><%= app.name %>.min.css': '<%= app.config.source.css %>/index.styl' // 1:1 compile
                 }
             },
             dev: {
                 options: {
-                    paths: ['src/stylus'],
-                    define: {"cdn_root" : "<%= pkg.deploy.dev.cdn_root %>"},
+                    paths: ['<%= app.config.source.css %>'],
+                    define: {"cdn_root" : "<%= app.config.cdn.dev.cdn_root %>"},
+                    compress : false,
+                    linenos: true,
                     use: [
-                        
+
                     ],
                     import: [      //  @import 'foo', 'bar/moo', etc. into every .styl file
                       
                     ]
                 },
                 files: {
-                    'dev/css/<%= pkg.name %>.css': 'src/stylus/index.styl', // 1:1 compile
+                    '<%= app.config.deploy.css %><%= app.name %>.css': '<%= app.config.source.css %>/index.styl' // 1:1 compile
                     
                 }
             }
        
         },
-        template: {
-            dev: {
-                engine: 'ejs',
-                cwd: 'src/html/',
-                data: "package.json",
-                options: {
-                    debug:true,
-                    suffix:"",
-                    cdn_root: "<%= pkg.deploy.dev.cdn_root %>"
-                },
-                files: [
-                    {
-                        expand: true,     // Enable dynamic expansion.
-                        cwd: 'src/html/',      // Src matches are relative to this path.
-                        src: '*.ejs', // Actual pattern(s) to match.
-                        dest: 'dev/',   // Destination path prefix.
-                        ext: '.html'  // Dest filepaths will have this extension.
-                    }
-                ]
-            },
-            dist: {
-                engine: 'ejs',
-                cwd: 'src/html/',
-                data: 'package.json',
-                options: {
-                    debug:false,
-                    suffix:"min.",
-                    cdn_root: "<%= pkg.deploy.prod.cdn_root %>"
-                }, 
-                files: [
-                    {
-                        expand: true,     // Enable dynamic expansion.
-                        cwd: 'src/html/',      // Src matches are relative to this path.
-                        src: '*.ejs', // Actual pattern(s) to match.
-                        dest: 'dist/',   // Destination path prefix.
-                        ext: '.html'  // Dest filepaths will have this extension.
-                    }
-                ]
-            }
-        },
-
         cssmin: {
           add_banner: {
             options: {
               banner: '/* minified vendor css file */'
             },
             files: {
-              'dist/css/<%= pkg.name %>-vendors.min.css': ['dist/css/<%= pkg.name %>-vendors.css']
+              '<%= app.config.deploy.css %><%= app.name %>-vendors.min.css': ['<%= app.config.deploy.css %><%= app.name %>-vendors.css']
             }
           }
         },
@@ -101,34 +63,15 @@ module.exports = function(grunt) {
             separator: ';'
           },
           
-          dev: {
+          main: {
             // the files to concatenate
             files: {
-                'dev/js/<%= pkg.name %>.js' : [
-                   
-                    'src/js/base.js',
-                    'src/js/**/*.js'
-                ],
-                'dev/js/<%= pkg.name %>-vendors.js' : [
+                '<%= app.config.deploy.js %><%= app.name %>-vendors.js' : [
+                    'src/vendor/js/underscore.js',
+                    'src/vendor/js/backbone.js',
                     'src/vendor/js/**/*.js'
                 ],
-                'dev/css/<%= pkg.name %>-vendors.css' : [
-                    'src/vendor/css/**/*.css'
-                ]
-            }
-          },
-          dist: {
-            // the files to concatenate
-            files: {
-                'dist/js/<%= pkg.name %>.js' : [
-                   
-                    'src/js/base.js',
-                    'src/js/**/*.js'
-                ],
-                'dist/js/<%= pkg.name %>-vendors.js' : [
-                    'src/vendor/js/**/*.js'
-                ],
-                'dist/css/<%= pkg.name %>-vendors.css' : [
+                '<%= app.config.deploy.css %><%= app.name %>-vendors.css' : [
                     'src/vendor/css/**/*.css'
                 ]
             }
@@ -137,12 +80,12 @@ module.exports = function(grunt) {
         uglify: {
             options: {
             // the banner is inserted at the top of the output
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+                banner: '/*! <%= app.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
             },
             dist: {
                 files: {
-                    'dist/js/<%= pkg.name %>.min.js': ['dist/js/<%= pkg.name %>.js'],
-                    'dist/js/<%= pkg.name %>-vendors.min.js': ['dist/js/<%= pkg.name %>-vendors.js']
+                    '<%= app.config.deploy.js %><%= app.name %>.min.js': ['<%= app.config.deploy.js %><%= app.name %>.js'],
+                    '<%= app.config.deploy.js %><%= app.name %>-vendors.min.js': ['<%= app.config.deploy.js %><%= app.name %>-vendors.js']
                 }
             }
         },
@@ -162,39 +105,90 @@ module.exports = function(grunt) {
         watch: {
             js : {
                 files: ['<%= jshint.files %>'],
-                tasks: ['jshint' , 'concat:dev' ]
+                tasks: ['jshint' , 'concat' ]
+            },
+            app: {
+                files: ['<%= app.config.source.js %>**/*.coffee'],
+                tasks: ['browserify']
             },
             css : {
                 files: ['<%= stylus.dev.options.paths +"/**/*.styl" %>'],
                 tasks: ['stylus:dev' ]
             },
-            images : {
-                files: ['src/images/**/*.*'],
+            copy : {
+                files: ['<%= app.config.source.images %>**/*.*',
+                    '<%= app.config.source.template %>**/*.*'],
                 tasks: ['copy:dev']
-            },
-            template: {
-                files : ['<%= template.dev.cwd %>**/*.html'],
-                tasks : ['template:dev']
             }
             
         },
         copy: {
+
             dev: {
                 files: [
                     {
                         expand:true,
-                        cwd: "src/images/",
+                        cwd: "<%= app.config.source.images %>",
                         src: ["**"],
-                        dest: "dev/images/",
+                        dest: "<%= app.config.deploy.images %>",
+                        filter: 'isFile'
+                    },
+                    {
+                        expand:true,
+                        cwd: "<%= app.config.source.template %>",
+                        src: ["**"],
+                        dest: "<%= app.config.deploy.template %>",
                         filter: 'isFile'
                     }
 
-                ]
+                ],
+                options: {
+                    process: function (content, srcpath) {
+                        var name = grunt.config.data.app.name;
+                        var fileNameJs = name+".js";
+                        var fileNameJsVendors = name+"-vendors.js";
+                        var fileNameCss = name+".css";
+                        var fileNameCssVendors = name+"-vendors.css";
+                        content = content.split("%%JS_PATH%%").join(fileNameJs);
+                        content = content.split("%%JS_PATH_VENDORS%%").join(fileNameJsVendors);
+                        content = content.split("%%CSS_PATH%%").join(fileNameCss);
+                        content = content.split("%%CSS_PATH_VENDORS%%").join(fileNameCssVendors);
+                        return content;
+                    }
+                }
+            },
+            dist: {
+                files: [
+                    {
+                        expand:true,
+                        cwd: "<%= app.config.source.template %>",
+                        src: ["**"],
+                        dest: "<%= app.config.deploy.template %>",
+                        filter: 'isFile'
+                    }
+
+                ],
+                options: {
+                    process: function (content, srcpath) {
+
+                        var name = grunt.config.data.app.name;
+                        var fileNameJs = name+".min.js";
+                        var fileNameJsVendors = name+"-vendors.min.js";
+                        var fileNameCss = name+".min.css";
+                        var fileNameCssVendors = name+"-vendors.min.css";
+                        content = content.split("%%JS_PATH%%").join(fileNameJs);
+                        content = content.split("%%JS_PATH_VENDORS%%").join(fileNameJsVendors);
+                        content = content.split("%%CSS_PATH%%").join(fileNameCss);
+                        content = content.split("%%CSS_PATH_VENDORS%%").join(fileNameCssVendors);
+                        return content;
+                    }
+                }
             }
+
         },  
         clean: {
-          js: ["dist/js/*.js", "!dist/js/*.min.js"],
-          css: ["dist/css/*.css", "!dist/css/*.min.css"]
+          js: ["<%= app.config.deploy.js %>*.js", "!<%= app.config.deploy.js %>*.min.js"],
+          css: ["<%= app.config.deploy.css %>*.css", "!<%= app.config.deploy.css %>*.min.css"]
         },
         imagemin: {
             dist: {
@@ -203,9 +197,9 @@ module.exports = function(grunt) {
                         // Set to true to enable the following options…
                         expand: true,
                         // cwd is 'current working directory'
-                        cwd: 'src/images/',
+                        cwd: '<%= app.config.source.images %>',
                         src: ['**/*.{png,jpg}'],
-                        dest: 'dist/images/'
+                        dest: '<%= app.config.deploy.images %>'
                     }
                 ]
             }
@@ -226,6 +220,17 @@ module.exports = function(grunt) {
                 }
             }
 
+        },
+        browserify:{
+            "dist": {
+                "files": {
+                    "<%= app.config.deploy.js %><%= app.name %>.js" : ["<%= app.config.source.js %>main.coffee"]
+                }
+            },
+            "options": {
+                "transform": ["coffeeify"]
+            }
+
         }
 
     });
@@ -241,16 +246,19 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-template-html');
+
+    grunt.loadNpmTasks('grunt-browserify');
 
     
     grunt.registerTask('setup', ['bower' , 'dev']);
     grunt.registerTask('deploy', ['bower' , 'dist']);
 
-    grunt.registerTask('default', ['jshint', 'concat:dev','stylus:dev', 'template:dev' , 'newer:copy:dev', 'watch',  'connect:dev' ]);
+    grunt.registerTask('default', ['jshint', 'concat',"browserify",'stylus:dev', 'newer:copy:dev', 'watch',  'connect:dev' ]);
     grunt.registerTask('dev', ['default']);
-    grunt.registerTask('dist', ['jshint', 'concat:dist', 'uglify' , 'stylus:dist', 'cssmin' ,'template:dist' , 'newer:imagemin:dist' , 'clean']);
+    grunt.registerTask('dist', ['jshint', 'concat', "browserify",'uglify' , 'stylus:dist', 'cssmin' , 'newer:imagemin:dist' , 'clean']);
     grunt.registerTask('dist:test', ['dist', "connect:dist:keepalive"]);
+
+
  
    
 };
