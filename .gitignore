@@ -18,8 +18,10 @@ node_modules/
 bower_components/
 src/vendor/js/
 src/vendor/css/
-dist/
-dev/
+app/templates/global/scripts.twig
+app/js/
+app/css/
+app/images/
 vendor/
 
 psd/
