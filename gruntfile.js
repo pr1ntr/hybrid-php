@@ -204,23 +204,6 @@ module.exports = function(grunt) {
                 ]
             }
         },
-        connect: {
-            dev: {
-                options: {
-                    port:3001,
-                    base: "./dev"
-
-                }
-            },
-            dist: {
-                options: {
-                    port:3001,
-                    base: "./dist"
-
-                }
-            }
-
-        },
         browserify:{
             "dist": {
                 "files": {
@@ -245,7 +228,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-connect');
 
     grunt.loadNpmTasks('grunt-browserify');
 
@@ -253,10 +235,10 @@ module.exports = function(grunt) {
     grunt.registerTask('setup', ['bower' , 'dev']);
     grunt.registerTask('deploy', ['bower' , 'dist']);
 
-    grunt.registerTask('default', ['jshint', 'concat',"browserify",'stylus:dev', 'newer:copy:dev', 'watch',  'connect:dev' ]);
+    grunt.registerTask('default', ['jshint', 'concat',"browserify",'stylus:dev', 'newer:copy:dev', 'watch' ]);
     grunt.registerTask('dev', ['default']);
     grunt.registerTask('dist', ['jshint', 'concat', "browserify",'uglify' , 'stylus:dist', 'cssmin' , 'newer:imagemin:dist' , 'clean']);
-    grunt.registerTask('dist:test', ['dist', "connect:dist:keepalive"]);
+
 
 
  
