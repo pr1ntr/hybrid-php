@@ -2,8 +2,7 @@
     "require": {
         "twig/twig": "1.*",
         "slim/slim": "2.*",
-        "slim/views": "0.1.*",
-        "voodoophp/handlebars": "2.*"
+        "slim/views": "0.1.*"
 
     }
 }

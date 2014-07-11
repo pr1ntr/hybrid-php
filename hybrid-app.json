@@ -7,13 +7,12 @@
             "css" : "src/stylus/",
             "js" : "src/app/",
             "images" : "src/images/",
-            "template" : "src/template/"
+            "templates" : "src/template/"
         },
         "deploy" : {
             "css" : "app/css/",
             "js" : "app/js/",
-            "images" : "app/images",
-            "template" : "app/templates"
+            "images" : "app/images"
         },
         "cdn" : {
             "dev": {
@@ -23,7 +22,7 @@
                 "cdn_root": "/"
             }
         },
-        "template" : {
+        "templates" : {
             "folder" : "/templates"
         },
         "paths": [
