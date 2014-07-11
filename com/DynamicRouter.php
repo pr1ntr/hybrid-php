@@ -19,8 +19,20 @@ class DynamicRouter {
         $this->data = $data;
         $this->app = $app;
 
+
+        $this->createApiRoutes();
         $this->createRoutes();
 
+    }
+
+    private function createApiRoutes() {
+        $appPaths = $this->data->config->paths;
+        $app = $this->app;
+
+        $app->get("/api/routes" , function () use ($app, $appPaths) {
+            header("Content-type:application/json");
+            echo json_encode($appPaths);
+        });
     }
 
     private function createRoutes() {
