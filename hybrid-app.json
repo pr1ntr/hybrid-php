@@ -7,7 +7,7 @@
             "css" : "src/stylus/",
             "js" : "src/app/",
             "images" : "src/images/",
-            "templates" : "src/template/"
+            "templates" : "src/templates"
         },
         "deploy" : {
             "css" : "app/css/",
@@ -23,7 +23,7 @@
             }
         },
         "templates" : {
-            "folder" : "/templates"
+            "folder" : "templates/"
         },
         "paths": [
             {

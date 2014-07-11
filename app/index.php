@@ -19,7 +19,7 @@ if(isset($appDataFile)) {
 
     $app->config(array(
         "debug"=>$debug,
-        "templates.path" =>realpath (__DIR__.$appData->config->template->folder),
+        "templates.path" =>realpath (__DIR__."/../".$appData->config->templates->folder),
         'view' => new \Slim\Views\Twig()
     ));
 

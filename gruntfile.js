@@ -136,7 +136,7 @@ module.exports = function(grunt) {
                         expand:true,
                         cwd: "<%= app.config.source.templates %>",
                         src: ["**"],
-                        dest: "<%= app.config.templates %>",
+                        dest: "<%= app.config.templates.folder %>",
                         filter: 'isFile'
                     }
 
