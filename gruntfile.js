@@ -116,7 +116,7 @@ module.exports = function(grunt) {
             },
             copy : {
                 files: ['<%= app.config.source.images %>**/*.*',
-                    '<%= app.config.source.template %>**/*.*'],
+                    '<%= app.config.source.templates %>**/*.*'],
                 tasks: ['copy:dev']
             }
             
@@ -160,7 +160,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand:true,
-                        cwd: "<%= app.config.source.template %>",
+                        cwd: "<%= app.config.source.templates %>",
                         src: ["**"],
                         dest: "<%= app.config.templates.folder %>",
                         filter: 'isFile'

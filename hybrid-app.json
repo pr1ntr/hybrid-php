@@ -7,12 +7,12 @@
             "css" : "src/stylus/",
             "js" : "src/app/",
             "images" : "src/images/",
-            "templates" : "src/templates"
+            "templates" : "src/templates/"
         },
         "deploy" : {
             "css" : "app/css/",
             "js" : "app/js/",
-            "images" : "app/images"
+            "images" : "app/images/"
         },
         "cdn" : {
             "dev": {
@@ -27,14 +27,25 @@
         },
         "paths": [
             {
-                "route": "/",
+                "path": "/",
                 "view": "pages/index.twig",
-                "data" : ""
+                "data" : {
+                    "name" : "Home"
+                }
             },
             {
-                "route": "/about",
-                "view": "pages/about.twig",
-                "data" : ""
+                "path": "/work",
+                "view": "pages/work.twig",
+                "data" : {
+                    "name" : "Work"
+                }
+            },
+            {
+                "path": "/blog",
+                "view": "pages/blog.twig",
+                "data" : {
+                    "name" : "Blog"
+                }
             }
         ]
     }

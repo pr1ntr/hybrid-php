@@ -40,14 +40,14 @@ class DynamicRouter {
         $appPaths = $this->data->config->paths;
         $app = $this->app;
         foreach($appPaths as $path) {
-            $route = $path->route;
+            $route = $path->path;
             $view = $path->view;
-            $dataUrl = $path->data;
+            $data = $path->data;
 
-            $app->get($route, function () use ($app, $view, $dataUrl) {
+            $app->get($route, function () use ($app, $view, $data, $appPaths) {
                 $request = $app->request;
                 $isAjax = $request->isAjax();
-                $data = DynamicRouter::getData($dataUrl);
+                $data = DynamicRouter::getData($data, $appPaths);
                 if(!$isAjax) {
                     $app->render($view, $data);
                 }else{
@@ -59,42 +59,42 @@ class DynamicRouter {
         }
     }
 
-    private static function getData($dataUrl, $params = array()) {
+    private static function getData($data, $appPaths, $params = array()) {
 
         //To Do
         //If Needed, parse params into supplanted fields of call
 
-
         $response = array(
             "status"=>"success",
-            "data"=>array()
+            "routes"=>$appPaths,
+            "content"=>$data
         );
 
-        if($dataUrl) {
-            try {
-                $ch = curl_init($dataUrl);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    "Content-Type: application/json"
-                ));
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); //Turn this on once the server is live
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $url = filter_var($data, FILTER_VALIDATE_URL);
+        if(isset($url) && $url !== false) {
+            if($data) {
+                try {
+                    $ch = curl_init($data);
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                        "Content-Type: application/json"
+                    ));
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); //Turn this on once the server is live
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT ,15); //This can change.
 
-                $result = curl_exec($ch);
-                $result = json_decode($result);
+                    $result = curl_exec($ch);
+                    $result = json_decode($result);
 
-                $response = array(
-                    "status"=>"success",
-                    "data"=>$result
-                );
-
-            } catch (Exception $e) {
-                $response = array(
-                    "status"=>"error",
-                    "error"=>$e
-                );
-
+                    $response['status'] = "success";
+                    $response['content'] = $result;
+                } catch (Exception $e) {
+                    $response['status'] = "error";
+                    $response['content'] = $e;
+                }
             }
         }
+
+
 
         return $response;
 
