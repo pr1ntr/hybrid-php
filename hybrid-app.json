@@ -23,7 +23,7 @@
             }
         },
         "templates" : {
-            "folder" : "templates/"
+            "folder" : "app/templates/"
         },
         "paths": [
             {
@@ -37,14 +37,52 @@
                 "path": "/work",
                 "view": "pages/work.twig",
                 "data" : {
-                    "name" : "Work"
+                    "name" : "Work",
+                    "work" : [
+                        {
+                            "id":"1"
+                        },
+                        {
+                            "id":"2"
+                        },
+                        {
+                            "id":"3"
+                        },
+                        {
+                            "id":"4"
+                        },
+                        {
+                            "id":"5"
+                        },
+                        {
+                            "id":"6"
+                        }
+                    ]
                 }
             },
             {
                 "path": "/blog",
                 "view": "pages/blog.twig",
                 "data" : {
-                    "name" : "Blog"
+                    "name" : "Blog",
+                    "blog" : [
+                        {
+                            "id": 1,
+                            "body": "Cras vitae interdum turpis, aliquet tempor eros. Vivamus vitae convallis sapien. Vestibulum posuere quis tellus quis aliquet. Vivamus nisi tortor, hendrerit sed moit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique tor vel, fringilla id lectus. Ut luctus nibh diam, vitae blandit dui dignissim a. Nam elementum felis ut eros iaculis consequat."
+                        },
+                        {
+                            "id": 2,
+                            "body": "Cras vitae interdum turpis, aliquet tempor eros. Vivamus vitae convallis sapien. Vestibulum posuere quis tellus quis aliquet. Vivamus nisi tortor, hendrerit sed molestie at, pellentesque eget mnetus et malesuada fames ac turpis egestas. Maecenas vulputate semper feugiat. Etiam tincidunt ultricies convallis. Etiam venenatis in purus eget aliquam. Pellentesque lacus nulla, fringilla eget auctor vel, fringilla id lectus. Ut luctus nibh diam, vitae blandit dui dignissim a. Nam elementum felis ut eros iaculis consequat."
+                        },
+                        {
+                            "id": 3,
+                            "body": "Cras vitae interdum turpis, aliquet tempor eros. Vivamus vitae convallis sapien. Vestibulum posuere quis tellus quis aliquet. Vivamus nisi tortor, hendrerit sed molestie at, pellentesque eget metus. Loremtum felis ut eros iaculis consequat."
+                        },
+                        {
+                            "id": 4,
+                            "body": "Cras vitae interdum turpis, aliquet tempor eros. Vivamus vitae convallis sapien. Vestibulum posuere qu convallis. Etiam venenatis in purus eget aliquam. Pellentesque lacus nulla, fringilla eget auctor vel, fringilla id lectus. Ut luctus nibh diam, vitae blandit dui dignissim a. Nam elementum felis ut eros iaculis consequat."
+                        }
+                    ]
                 }
             }
         ]

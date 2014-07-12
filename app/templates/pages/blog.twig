@@ -1,0 +1,13 @@
+
+{% extends "_main.twig" %}
+
+{% block content %}
+    <h1>Blog</h1>
+    <ul>
+        {% for entry in content.blog %}
+        <li class="blog-entry" id="{{ entry.id }}">
+            <p>{{ entry.body }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

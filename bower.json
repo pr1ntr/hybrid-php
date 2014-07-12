@@ -18,6 +18,9 @@
   ],
   "dependencies": {
     "jquery": "~2.1.1",
-    "backbone": "~1.1.2"
+    "backbone": "~1.1.2",
+    "twig.js": "~0.7.2",
+    "greensock": "~1.12.1",
+    "PreloadJS": "*"
   }
 }

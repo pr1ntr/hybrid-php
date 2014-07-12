@@ -5,7 +5,10 @@ module.exports = function(grunt) {
             dist: {
                 options: {
                     paths: ['<%= app.config.source.css %>'],
-                    define: {"cdn_root" : "<%= app.config.cdn.prod.cdn_root %>"},
+                    define: {
+                        "cdn_root" : "<%= app.config.cdn.prod.cdn_root %>",
+                        "import_tree" : require('stylus-import-tree')
+                    },
                     use: [
                         
                     ],
@@ -21,7 +24,10 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     paths: ['<%= app.config.source.css %>'],
-                    define: {"cdn_root" : "<%= app.config.cdn.dev.cdn_root %>"},
+                    define: {
+                        "cdn_root" : "<%= app.config.cdn.dev.cdn_root %>",
+                        "import_tree" : require('stylus-import-tree')
+                    },
                     compress : false,
                     linenos: true,
                     use: [
