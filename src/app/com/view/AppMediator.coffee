@@ -42,11 +42,16 @@ class AppMediator extends AbstractViewMediator
 
 
     onSectionLoaded: (section) =>
-        console.log "assetsLoaded"
-        section.render()
+        if @currentSection?
+            section.model.set("needsRender", true)
+            @currentSection.transitionOut(section.transitionIn)
+            @currentSection = section;
+        else
+            @currentSection = section
+            @currentSection.transitionIn()
 
     onSectionData: (section) =>
-        console.log "dataLoaded"
+        #console.log "dataLoaded"
 
 
 
@@ -65,9 +70,7 @@ class AppMediator extends AbstractViewMediator
 
         ###
 
-
         section = @getSectionByPath "/"+view
-        console.log("goto view")
         if section.model.get("assetsLoaded")
             @onSectionLoaded(section)
         else

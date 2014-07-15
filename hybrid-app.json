@@ -37,7 +37,7 @@
             },
             {
                 "id" : "work",
-                "path": "/work/new",
+                "path": "/work",
                 "view": "pages/work.twig",
                 "data" : {
                     "name" : "Work",

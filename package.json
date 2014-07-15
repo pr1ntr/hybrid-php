@@ -1,7 +1,7 @@
 {
   "name": "hybrid-php",
   "title": "Hybrid SPA for PHP",
-  "version": "0.5.1",
+  "version": "0.5.0",
   "dependencies": {
     "coffeeify": "^0.6.0",
     "ejs": "^1.0.0",
