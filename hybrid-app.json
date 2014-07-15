@@ -1,6 +1,7 @@
 {
     "name": "hybrid-php",
     "welcome": "hybrid-php online. all systems green.",
+    "doc_root" : "app/",
     "config":
     {
         "source" : {
@@ -10,9 +11,9 @@
             "templates" : "src/templates/"
         },
         "deploy" : {
-            "css" : "app/css/",
-            "js" : "app/js/",
-            "images" : "app/images/"
+            "css" : "css/",
+            "js" : "js/",
+            "images" : "images/"
         },
         "cdn" : {
             "dev": {
@@ -23,10 +24,11 @@
             }
         },
         "templates" : {
-            "folder" : "app/templates/"
+            "folder" : "templates/"
         },
         "paths": [
             {
+                "id" : "index" ,
                 "path": "/",
                 "view": "pages/index.twig",
                 "data" : {
@@ -34,6 +36,7 @@
                 }
             },
             {
+                "id" : "work",
                 "path": "/work",
                 "view": "pages/work.twig",
                 "data" : {
@@ -61,6 +64,7 @@
                 }
             },
             {
+                "id" : "blog",
                 "path": "/blog",
                 "view": "pages/blog.twig",
                 "data" : {

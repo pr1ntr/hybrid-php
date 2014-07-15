@@ -10,15 +10,15 @@ module.exports = function(grunt) {
                         "import_tree" : require('stylus-import-tree')
                     },
                     use: [
-                        
+
                     ],
                     import: [      //  @import 'foo', 'bar/moo', etc. into every .styl file
-                      
+
                     ]
                 },
                 files: {
                     // 1:1 compile
-                    '<%= app.config.deploy.css %><%= app.name %>.min.css': '<%= app.config.source.css %>/index.styl' // 1:1 compile
+                    '<%= app.doc_root + app.config.deploy.css %><%= app.name %>.min.css': '<%= app.config.source.css %>/index.styl' // 1:1 compile
                 }
             },
             dev: {
@@ -34,15 +34,15 @@ module.exports = function(grunt) {
 
                     ],
                     import: [      //  @import 'foo', 'bar/moo', etc. into every .styl file
-                      
+
                     ]
                 },
                 files: {
-                    '<%= app.config.deploy.css %><%= app.name %>.css': '<%= app.config.source.css %>/index.styl' // 1:1 compile
-                    
+                    '<%= app.doc_root + app.config.deploy.css %><%= app.name %>.css': '<%= app.config.source.css %>/index.styl' // 1:1 compile
+
                 }
             }
-       
+
         },
         cssmin: {
           add_banner: {
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
               banner: '/* minified vendor css file */'
             },
             files: {
-              '<%= app.config.deploy.css %><%= app.name %>-vendors.min.css': ['<%= app.config.deploy.css %><%= app.name %>-vendors.css']
+              '<%= app.doc_root + app.config.deploy.css %><%= app.name %>-vendors.min.css': ['<%= app.doc_root + app.config.deploy.css %><%= app.name %>-vendors.css']
             }
           }
         },
@@ -67,16 +67,16 @@ module.exports = function(grunt) {
             // define a string to put between each file in the concatenated output
             separator: ';'
           },
-          
+
           main: {
             // the files to concatenate
             files: {
-                '<%= app.config.deploy.js %><%= app.name %>-vendors.js' : [
+                '<%= app.doc_root + app.config.deploy.js %><%= app.name %>-vendors.js' : [
                     'src/vendor/js/underscore.js',
                     'src/vendor/js/backbone.js',
                     'src/vendor/js/**/*.js'
                 ],
-                '<%= app.config.deploy.css %><%= app.name %>-vendors.css' : [
+                '<%= app.doc_root + app.config.deploy.css %><%= app.name %>-vendors.css' : [
                     'src/vendor/css/**/*.css'
                 ]
             }
@@ -89,8 +89,8 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    '<%= app.config.deploy.js %><%= app.name %>.min.js': ['<%= app.config.deploy.js %><%= app.name %>.js'],
-                    '<%= app.config.deploy.js %><%= app.name %>-vendors.min.js': ['<%= app.config.deploy.js %><%= app.name %>-vendors.js']
+                    '<%= app.doc_root + app.config.deploy.js %><%= app.name %>.min.js': ['<%= app.doc_root + app.config.deploy.js %><%= app.name %>.js'],
+                    '<%= app.doc_root + app.config.deploy.js %><%= app.name %>-vendors.min.js': ['<%= app.doc_root + app.config.deploy.js %><%= app.name %>-vendors.js']
                 }
             }
         },
@@ -125,7 +125,7 @@ module.exports = function(grunt) {
                     '<%= app.config.source.templates %>**/*.*'],
                 tasks: ['copy:dev']
             }
-            
+
         },
         copy: {
 
@@ -135,7 +135,7 @@ module.exports = function(grunt) {
                         expand:true,
                         cwd: "<%= app.config.source.images %>",
                         src: ["**"],
-                        dest: "<%= app.config.deploy.images %>",
+                        dest: "<%= app.doc_root + app.config.deploy.images %>",
                         filter: 'isFile'
                     },
                     {
@@ -190,10 +190,10 @@ module.exports = function(grunt) {
                 }
             }
 
-        },  
+        },
         clean: {
-          js: ["<%= app.config.deploy.js %>*.js", "!<%= app.config.deploy.js %>*.min.js"],
-          css: ["<%= app.config.deploy.css %>*.css", "!<%= app.config.deploy.css %>*.min.css"]
+          js: ["<%= app.doc_root + app.config.deploy.js %>*.js", "!<%= app.doc_root + app.config.deploy.js %>*.min.js"],
+          css: ["<%= app.doc_root + app.config.deploy.css %>*.css", "!<%= app.doc_root + app.config.deploy.css %>*.min.css"]
         },
         imagemin: {
             dist: {
@@ -204,7 +204,7 @@ module.exports = function(grunt) {
                         // cwd is 'current working directory'
                         cwd: '<%= app.config.source.images %>',
                         src: ['**/*.{png,jpg}'],
-                        dest: '<%= app.config.deploy.images %>'
+                        dest: '<%= app.doc_root + app.config.deploy.images %>'
                     }
                 ]
             }
@@ -212,8 +212,14 @@ module.exports = function(grunt) {
         browserify:{
             "dist": {
                 "files": {
-                    "<%= app.config.deploy.js %><%= app.name %>.js" : ["<%= app.config.source.js %>main.coffee"]
+                    "<%= app.doc_root + app.config.deploy.js %><%= app.name %>.js" : ["<%= app.config.source.js %>main.coffee"]
+                },
+                "options": {
+                    "bundleOptions" : {
+                        "debug" : true
+                    }
                 }
+
             },
             "options": {
                 "transform": ["coffeeify"]

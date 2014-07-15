@@ -14,10 +14,12 @@ class DynamicRouter {
 
     private $data;
     private $app;
+    private $debug = true;
 
     public function __construct($data, $app) {
         $this->data = $data;
         $this->app = $app;
+        $this->debug = $app->config('debug');
 
 
         $this->createApiRoutes();
@@ -26,12 +28,24 @@ class DynamicRouter {
     }
 
     private function createApiRoutes() {
-        $appPaths = $this->data->config->paths;
+        $data = array();
+
+        $data['routes'] = array();
+        $data['cdn'] = $this->debug ?  $this->data->config->cdn->dev->cdn_root : $this->data->config->cdn->prod->cdn_root;
+        $data['debug'] = $this->debug;
+
+
+        foreach( $this->data->config->paths as $i=>$path) {
+            $data['routes'][$i]['id'] = $path->id;
+            $data['routes'][$i]['path'] = $path->path;
+            $data['routes'][$i]['view'] = $this->data->config->templates->folder.$path->view;
+        }
+
         $app = $this->app;
 
-        $app->get("/api/routes" , function () use ($app, $appPaths) {
+        $app->get("/api/data" , function () use ($app, $data) {
             header("Content-type:application/json");
-            echo json_encode($appPaths);
+            echo json_encode($data);
         });
     }
 
@@ -47,7 +61,7 @@ class DynamicRouter {
             $app->get($route, function () use ($app, $view, $data, $appPaths) {
                 $request = $app->request;
                 $isAjax = $request->isAjax();
-                $data = DynamicRouter::getData($data, $appPaths);
+                $data = DynamicRouter::getData($data);
                 if(!$isAjax) {
                     $app->render($view, $data);
                 }else{
@@ -59,14 +73,13 @@ class DynamicRouter {
         }
     }
 
-    private static function getData($data, $appPaths, $params = array()) {
+    private static function getData($data, $params = array()) {
 
         //To Do
         //If Needed, parse params into supplanted fields of call
 
         $response = array(
             "status"=>"success",
-            "routes"=>$appPaths,
             "content"=>$data
         );
 

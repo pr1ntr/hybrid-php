@@ -1,4 +1,5 @@
 AppMediator = require('./view/AppMediator.coffee')
+AppModel = require('./model/AppModel.coffee')
 
 class HybridApp extends Backbone.Router
 
@@ -6,17 +7,27 @@ class HybridApp extends Backbone.Router
         @initialize()
 
 
+
     initialize: ->
-        @initView()
         @initModel()
-        @initRouter()
 
     initModel: ->
+        @appModel = new AppModel
+            url:"/api/data"
+        @appModel.on "assetsLoaded" , @onModelLoaded
+        @appModel.fetch()
+
+    onModelLoaded: =>
+
+        @initView()
+        @initRouter()
 
     initView: ->
         @viewMediator = new AppMediator
             el: "body"
-            model: {}
+            model: @appModel
+
+        @viewMediator.start();
 
 
     initRouter: ->
@@ -26,8 +37,15 @@ class HybridApp extends Backbone.Router
             root: window.ROOT or "/"
 
 
-    gotoSection: =>
+    gotoSection: (path) =>
 
+        if !path?
+            path = "";
+
+
+
+
+        @viewMediator.gotoView path
 
 
 

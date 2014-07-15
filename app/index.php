@@ -16,10 +16,10 @@ if(isset($appDataFile)) {
     $debug = (getenv("SLIM_MODE") === "development") ? true : false;
     $app = new \Slim\Slim();
     $app->setName($appData->name);
-
+    $templates = __DIR__."/".$appData->config->templates->folder;
     $app->config(array(
         "debug"=>$debug,
-        "templates.path" =>realpath (__DIR__."/../".$appData->config->templates->folder),
+        "templates.path" =>realpath ($templates),
         'view' => new \Slim\Views\Twig()
     ));
 
