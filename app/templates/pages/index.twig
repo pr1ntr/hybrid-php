@@ -1,5 +1,5 @@
 
-{% extends "_main.twig" %}
+{% extends ajax == false ? "_main.twig" : "../_ajax.twig" %}
 
 {% block content %}
     <h1>Home</h1>

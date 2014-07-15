@@ -7,6 +7,22 @@ class SectionView extends AbstractView
         super(opts)
 
 
+        @model.on "dataLoaded" , @onDataLoaded
+        @model.on "assetsLoaded" , @onAssetsLoaded
+
+
+    onDataLoaded: =>
+        @trigger "dataLoaded" , @
+        @model.set "dataLoaded" , true
+        @model.loadAssets()
+
+
+    onAssetsLoaded: =>
+        @trigger "assetsLoaded" , @
+        @model.set "assetsLoaded" , true
+
+
+
 
 
 

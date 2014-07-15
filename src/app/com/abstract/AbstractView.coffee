@@ -5,13 +5,16 @@ class AbstractView extends Backbone.View
         super(opts)
 
 
-    initialize: (opts) ->
+    getTemplate: ->
         @template = twig
-            data: opts.template
+            id: @model.get("id")
+            href: "/"+@model.get("view")
+            async:false
 
 
 
     render: ->
+        @getTemplate()
         view = @template.render(@model.attributes)
         @$el.empty().html(view);
 

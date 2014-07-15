@@ -4,13 +4,13 @@
 class AbstractModel extends Backbone.Model
 
 
-    preloader : null
-    manifest : null
+
 
     initialize: (opts) =>
         @opts = opts
         @url = opts.url
         @manifest = []
+        @prelaoder
         super()
 
         @on "change" , @dataLoaded
@@ -19,9 +19,9 @@ class AbstractModel extends Backbone.Model
 
 
     dataLoaded: =>
-        @off "change" , @dataLoaded
 
-        @preloader = new createjs.LoadQueue true , @get("cdn_root")
+        @off "change" , @dataLoaded
+        @preloader = new createjs.LoadQueue true , @get("cdn")
         @preloader.setMaxConnections(20)
         @preloader.addEventListener "complete" , @onPreloadComplete
         @preloader.addEventListener "progress" , @onPreloadProgress

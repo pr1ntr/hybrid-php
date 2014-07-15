@@ -8,18 +8,9 @@ class AppModel extends AbstractModel
 
 
     processData: ->
-        @preloadTemplates()
+
         @loadAssets()
 
-
-    preloadTemplates: ->
-
-        routes = @get("routes")
-        for route in routes
-
-            @manifest.push
-                id: route.id
-                src:route.view
 
 
 

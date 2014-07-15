@@ -55,22 +55,30 @@ class DynamicRouter {
         $app = $this->app;
         foreach($appPaths as $path) {
             $route = $path->path;
+            $id = $path->id;
             $view = $path->view;
             $data = $path->data;
 
-            $app->get($route, function () use ($app, $view, $data, $appPaths) {
+
+            $app->get($route, function () use ($app, $view, $data, $appPaths, $id) {
                 $request = $app->request;
                 $isAjax = $request->isAjax();
                 $data = DynamicRouter::getData($data);
+                $data['content']->id = $id;
                 if(!$isAjax) {
+                    $data = array_merge($data, array("routes"=>$appPaths));
                     $app->render($view, $data);
                 }else{
                     header("Content-type:application/json");
+                    $data['ajax'] = $isAjax;
                     echo json_encode($data);
                 }
             });
 
         }
+
+
+
     }
 
     private static function getData($data, $params = array()) {

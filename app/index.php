@@ -28,7 +28,8 @@ if(isset($appDataFile)) {
     $view = $app->view();
     $view->parserOptions = array(
         'debug' => $debug,
-        'cache' => realpath(__DIR__ . '../cache')
+        'auto_reload'=>$debug,
+
     );
 
 

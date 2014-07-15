@@ -6,9 +6,11 @@
 </head>
 <body>
 {% include "global/_navigation.twig" %}
-<div id="content" class="content-container" id="{% filter lower %}{{ content.name }}{% endfilter %}">
+<div id="content" class="content-container">
+    <div id="{{ content.id }}">
     {% block content  %}
     {% endblock %}
+    </div>
 </div>
 
 </body>

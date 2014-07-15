@@ -28,21 +28,52 @@ class AppMediator extends AbstractViewMediator
                 template: @model.preloader.getResult(route.id)
                 model: new AbstractModel
                     url: route.path
-            section.model.on "dataLoaded" , @handleSectionEvent
-            section.model.fetch()
+            section.model.attributes.path = route.path
+            section.model.attributes.view = route.view
 
             @sections.push section
 
+    getSectionByPath: (path) ->
+        for section in @sections
+            if path is section.model.get "path"
+                return section
 
-    onSectionLoaded: (e) =>
+        return false
+
+
+    onSectionLoaded: (section) =>
+        console.log "assetsLoaded"
+        section.render()
+
+    onSectionData: (section) =>
         console.log "dataLoaded"
 
-    onSectionData: (e) =>
-        console.log "assetsLoaded"
+
 
 
     gotoView: (view) ->
 
+        views = view.split("/")
+
+        ###
+        if views.length > 1
+            views.shift()
+            views = views.join("/")
+
+            #TO DO
+            #make another app mediateor to handle anything above this route
+
+        ###
+
+
+        section = @getSectionByPath "/"+view
+        console.log("goto view")
+        if section.model.get("assetsLoaded")
+            @onSectionLoaded(section)
+        else
+            section.on "assetsLoaded" , @onSectionLoaded
+            section.on "dataLoaded" , @onSectionData
+            section.model.fetch()
 
 
 
