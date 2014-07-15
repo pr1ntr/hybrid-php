@@ -24,7 +24,7 @@ class AppMediator extends AbstractViewMediator
         for route in @model.get "routes"
 
             section = new SectionView
-                el: "##{route.id}"
+                el: "#content"
                 template: @model.preloader.getResult(route.id)
                 model: new AbstractModel
                     url: route.path
