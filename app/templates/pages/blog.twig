@@ -2,7 +2,7 @@
 {% extends ajax == false ? "_main.twig" : "../_ajax.twig" %}
 
 {% block content %}
-    <h1>Blog</h1>
+    <h1>{{ name }}</h1>
     <ul>
         {% for entry in content.blog %}
         <li class="blog-entry" id="{{ entry.id }}">

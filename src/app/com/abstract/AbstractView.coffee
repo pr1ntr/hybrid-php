@@ -6,9 +6,10 @@ class AbstractView extends Backbone.View
 
 
     getTemplate: ->
+
         @template = twig
             id: @model.get("id")
-            href: "/"+@model.get("view")
+            href: @model.get("view")
             async:false
 
 

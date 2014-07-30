@@ -31,44 +31,46 @@
                 "id" : "index" ,
                 "path": "/",
                 "view": "pages/index.twig",
+                "name" : "Home",
                 "data" : {
-                    "name" : "Home"
+
                 }
             },
             {
                 "id" : "work",
                 "path": "/work",
-                "view": "pages/work.twig",
-                "data" : {
-                    "name" : "Work",
-                    "work" : [
-                        {
-                            "id":"1"
-                        },
-                        {
-                            "id":"2"
-                        },
-                        {
-                            "id":"3"
-                        },
-                        {
-                            "id":"4"
-                        },
-                        {
-                            "id":"5"
-                        },
-                        {
-                            "id":"6"
-                        }
-                    ]
-                }
+                "paths" : [
+                    {
+                        "id" : "photos_0" ,
+                        "path": "/1",
+                        "view": "pages/work/photos.twig",
+                        "data" : "http://local.hybrid-php.com/data/photos.json",
+                        "name" : "Photos 1"
+                    },
+                    {
+                        "id" : "photos_1" ,
+                        "path": "/2",
+                        "view": "pages/work/photos.twig",
+                        "data" : "http://local.hybrid-php.com/data/photos.json",
+                        "name" : "Photos 2"
+                    },
+                    {
+                        "id" : "photos_2" ,
+                        "path": "/3",
+                        "view": "pages/work/photos.twig",
+                        "data" : "http://local.hybrid-php.com/data/photos.json",
+                        "name" : "Photos 3"
+                    }
+                ],
+                "name" : "Work",
+                "sectionClass" : "SectionView"
             },
             {
                 "id" : "blog",
+                "name" : "Blog",
                 "path": "/blog",
                 "view": "pages/blog.twig",
                 "data" : {
-                    "name" : "Blog",
                     "blog" : [
                         {
                             "id": 1,
@@ -87,7 +89,8 @@
                             "body": "Cras vitae interdum turpis, aliquet tempor eros. Vivamus vitae convallis sapien. Vestibulum posuere qu convallis. Etiam venenatis in purus eget aliquam. Pellentesque lacus nulla, fringilla eget auctor vel, fringilla id lectus. Ut luctus nibh diam, vitae blandit dui dignissim a. Nam elementum felis ut eros iaculis consequat."
                         }
                     ]
-                }
+                },
+                "sectionClass" : "SectionView"
             }
         ]
     }

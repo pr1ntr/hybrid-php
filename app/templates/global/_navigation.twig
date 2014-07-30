@@ -1,8 +1,10 @@
+{% import "global/macros/_linklist.twig" as macros %}
+
 <nav>
-    <ul>
-        {% for route in routes %}
-            <li><a href="{{ route.path }}">{{ route.data.name }}</a></li>
-        {% endfor %}
-    </ul>
+    {% set root = "" %}
+    {{ macros.linkList(routes,root) }}
+
 
 </nav>
+
+

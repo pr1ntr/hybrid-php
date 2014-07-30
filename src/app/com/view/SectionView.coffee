@@ -10,8 +10,6 @@ class SectionView extends AbstractView
     initialize: (opts) ->
         super(opts)
 
-
-
         @model.on "dataLoaded" , @onDataLoaded
         @model.on "assetsLoaded" , @onAssetsLoaded
 

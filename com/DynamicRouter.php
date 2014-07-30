@@ -12,6 +12,7 @@
 class DynamicRouter {
 
 
+    private $tree;
     private $data;
     private $app;
     private $debug = true;
@@ -20,6 +21,7 @@ class DynamicRouter {
         $this->data = $data;
         $this->app = $app;
         $this->debug = $app->config('debug');
+        $this->tree = $this->data->config->paths;
 
 
         $this->createApiRoutes();
@@ -27,19 +29,37 @@ class DynamicRouter {
 
     }
 
+
+    /**
+     * @param $paths
+     * @param $data
+     * @return mixed
+
+     */
+    private function createRouteObject($paths, $data)
+    {
+        foreach ($paths as $i => $path) {
+            $data[$i]['id'] = $path->id;
+            $data[$i]['path'] = $path->path;
+            if(isset($path->view))
+                $data[$i]['view'] = "/".$this->data->config->templates->folder . $path->view;
+
+            if(isset($path->paths)) {
+                $data[$i]['paths'] = $this->createRouteObject($path->paths, array());
+            }
+        }
+        return $data;
+    }
+
     private function createApiRoutes() {
         $data = array();
 
-        $data['routes'] = array();
+
         $data['cdn'] = $this->debug ?  $this->data->config->cdn->dev->cdn_root : $this->data->config->cdn->prod->cdn_root;
         $data['debug'] = $this->debug;
 
 
-        foreach( $this->data->config->paths as $i=>$path) {
-            $data['routes'][$i]['id'] = $path->id;
-            $data['routes'][$i]['path'] = $path->path;
-            $data['routes'][$i]['view'] = $this->data->config->templates->folder.$path->view;
-        }
+        $data['routes'] = $this->createRouteObject($this->tree, array());
 
         $app = $this->app;
 
@@ -50,35 +70,53 @@ class DynamicRouter {
     }
 
     private function createRoutes() {
+        $this->setRoutes($this->tree, $this->app);
+    }
 
-        $appPaths = $this->data->config->paths;
-        $app = $this->app;
-        foreach($appPaths as $path) {
+    /**
+     * @param $appPaths
+     * @param $app
+     * @param $parent
+     */
+    private function setRoutes($appPaths, $app, $parent = array())
+    {
+        $tree = $this->tree;
+        foreach ($appPaths as $path) {
             $route = $path->path;
-            $id = $path->id;
-            $view = $path->view;
-            $data = $path->data;
 
-
-            $app->get($route, function () use ($app, $view, $data, $appPaths, $id) {
-                $request = $app->request;
-                $isAjax = $request->isAjax();
-                $data = DynamicRouter::getData($data);
-                $data['content']->id = $id;
-                if(!$isAjax) {
-                    $data = array_merge($data, array("routes"=>$appPaths));
-                    $app->render($view, $data);
-                }else{
-                    header("Content-type:application/json");
-                    $data['ajax'] = $isAjax;
-                    echo json_encode($data);
+            foreach($parent as  $k=>$v) {
+                if($k === "path") {
+                    $route = $v . $route;
                 }
-            });
+            }
+
+
+            if(isset($path->paths))
+                $this->setRoutes($path->paths, $app, $path);
+
+            if(isset($path->view) && isset($path->data)) {
+                $view = $path->view;
+                $data = $path->data;
+                $id = $path->id;
+
+                $app->get($route, function () use ($app, $view, $data, $tree, $id, $path) {
+                    $request = $app->request;
+                    $isAjax = $request->isAjax();
+                    $data = DynamicRouter::getData($data);
+                    $data['content']->id = $id;
+                    $data['name'] = $path->name;
+                    if (!$isAjax) {
+                        $data = array_merge($data, array("routes" => $tree));
+                        $app->render($view, $data);
+                    } else {
+                        header("Content-type:application/json");
+                        $data['ajax'] = $isAjax;
+                        echo json_encode($data);
+                    }
+                });
+            }
 
         }
-
-
-
     }
 
     private static function getData($data, $params = array()) {
@@ -124,4 +162,7 @@ class DynamicRouter {
 
 
     }
+
+
+
 } 

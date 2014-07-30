@@ -1,12 +1,12 @@
 
 
-{% extends ajax == false ? "_main.twig" : "../_ajax.twig" %}
+{% extends ajax == false ? "_main.twig" : "../../_ajax.twig" %}
 
 
 
 
 {% block content %}
-    <h1>Work</h1>
+    <h1>{{ name }}</h1>
     <ul>
         {% for figure in content.work %}
             <li class="box" id="{{ entry.id }}">

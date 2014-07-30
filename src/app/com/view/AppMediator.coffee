@@ -1,7 +1,12 @@
 AbstractViewMediator = require "../abstract/AbstractViewMediator.coffee"
 AbstractModel = require "../abstract/AbstractModel.coffee"
-NavigationView = require "./NavigationView.coffee"
-SectionView = require "./SectionView.coffee"
+
+
+
+Views = []
+Views["NavigationView"] = require "./NavigationView.coffee"
+Views["SectionView"] = require "./SectionView.coffee"
+
 
 class AppMediator extends AbstractViewMediator
 
@@ -11,27 +16,36 @@ class AppMediator extends AbstractViewMediator
 
     start: ->
         @generateNav()
-        @generateSections()
+        @generateSections(@model.get("routes") , "")
+
 
 
     generateNav: ->
-        @navigation = new NavigationView
+        @navigation = new Views["NavigationView"]
             el: "nav"
             model: @model
 
-    generateSections: ->
+    generateSections: (routes , root) =>
 
-        for route in @model.get "routes"
+        for route in routes
 
-            section = new SectionView
+            sectionClass = if route.sectionClass? then route.sectionClass else "SectionView"
+            section = new Views[sectionClass]
                 el: "#content"
                 template: @model.preloader.getResult(route.id)
                 model: new AbstractModel
-                    url: route.path
-            section.model.attributes.path = route.path
+                    url: root + route.path
+            section.model.attributes.path = root + route.path
             section.model.attributes.view = route.view
 
             @sections.push section
+
+            if route.paths?
+
+                @generateSections(route.paths , section.model.attributes.path)
+
+
+
 
     getSectionByPath: (path) ->
         for section in @sections
@@ -57,18 +71,6 @@ class AppMediator extends AbstractViewMediator
 
 
     gotoView: (view) ->
-
-        views = view.split("/")
-
-        ###
-        if views.length > 1
-            views.shift()
-            views = views.join("/")
-
-            #TO DO
-            #make another app mediateor to handle anything above this route
-
-        ###
 
         section = @getSectionByPath "/"+view
         if section.model.get("assetsLoaded")

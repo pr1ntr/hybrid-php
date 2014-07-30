@@ -26,12 +26,14 @@ if(isset($appDataFile)) {
 
 
     $view = $app->view();
+
     $view->parserOptions = array(
         'debug' => $debug,
         'auto_reload'=>$debug,
-
     );
-
+    $view->parserExtensions = array(
+        new Twig_Extension_Debug()
+    );
 
 
 

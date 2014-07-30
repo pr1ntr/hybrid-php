@@ -1,20 +1,73 @@
 
 
 nav
+
+  navHeight = 80px
+  fontSize = 35px
+  itemWidth = 150px
+
   display block
   width:100%
-  height:55px
-  margin 5px 0 0 0
-  ul
+  height:navHeight
+  padding 0 0 0 0
+  position fixed
+
+
+
+
+  > ul
+
+    > li
+      line-height: navHeight
+      text-align center
+      letter-spacing:-2.2pt
+
     li
       padding:0px 10px 0px 10px
-      text-align center
       float:left
-      font-size:35px
+      font-size:fontSize
+      height:navHeight
       color:#eaeaea
       font-weight:200
       text-transform:uppercase
-      letter-spacing:-2.2pt
-      a
+      width: itemWidth
+      cursor:pointer
+
+      position:relative
+      a , span
         text-decoration:none
         color:white
+        cursor:pointer
+
+
+
+
+      > ul
+        subNavHeight = 55px
+        subFontSize = 18px
+
+        width:100%
+        position:fixed
+        top: navHeight
+        height:subNavHeight
+        left: 0
+        background: white
+
+
+
+
+        > li
+          width:itemWidth
+          font-size:subFontSize
+          height:subNavHeight
+          text-align:center
+          font-weight:200
+          float:left
+          line-height:subNavHeight
+          letter-spacing 0pt
+          visibility hidden
+          opacity 0
+          a , span
+            color:black
+
+

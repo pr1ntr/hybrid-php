@@ -1,0 +1,20 @@
+{% macro  linkList(routes, root) %}
+    {% import _self as macros %}
+    <ul>
+        {% for route in routes %}
+            <li>
+                {% if(route.view) %}
+                <a href="{{ root ~ route.path }}">{{ route.name }}</a>
+                {% else %}
+                <span>{{ route.name }}</span>
+                {% endif %}
+                {% if route.paths %}
+
+                    {{  macros.linkList(route.paths, route.path)  }}
+                {% endif %}
+            </li>
+
+        {% endfor %}
+    </ul>
+
+{% endmacro %}
