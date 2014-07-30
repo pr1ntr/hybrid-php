@@ -1,8 +1,8 @@
-{% macro  linkList(routes, root) %}
+{% macro  linkList(routes, root, class) %}
     {% import _self as macros %}
-    <ul>
+    <ul data-route="{{ root }}" class="{{ class }}">
         {% for route in routes %}
-            <li>
+            <li data-route="{{ route.path }}" class="nav-item">
                 {% if(route.view) %}
                 <a href="{{ root ~ route.path }}">{{ route.name }}</a>
                 {% else %}
@@ -10,7 +10,7 @@
                 {% endif %}
                 {% if route.paths %}
 
-                    {{  macros.linkList(route.paths, route.path)  }}
+                    {{  macros.linkList(route.paths, route.path, "link-list")  }}
                 {% endif %}
             </li>
 

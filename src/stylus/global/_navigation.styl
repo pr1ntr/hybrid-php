@@ -11,6 +11,7 @@ nav
   height:navHeight
   padding 0 0 0 0
   position fixed
+  top:0
 
 
 
@@ -32,15 +33,19 @@ nav
       text-transform:uppercase
       width: itemWidth
       cursor:pointer
-
       position:relative
+      transition: border .3s
+
+
+      &.active
+        border-bottom:12px #ffffff solid
+
+
+
       a , span
         text-decoration:none
         color:white
         cursor:pointer
-
-
-
 
       > ul
         subNavHeight = 55px
@@ -67,7 +72,12 @@ nav
           letter-spacing 0pt
           visibility hidden
           opacity 0
+          transition:border .3s
           a , span
             color:black
+
+          &.active
+            border-bottom:12px #333333 solid
+
 
 

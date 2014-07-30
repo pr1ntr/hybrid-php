@@ -41,21 +41,21 @@
                 "path": "/work",
                 "paths" : [
                     {
-                        "id" : "photos_0" ,
+                        "id" : "work" ,
                         "path": "/1",
                         "view": "pages/work/photos.twig",
                         "data" : "http://local.hybrid-php.com/data/photos.json",
                         "name" : "Photos 1"
                     },
                     {
-                        "id" : "photos_1" ,
+                        "id" : "work" ,
                         "path": "/2",
                         "view": "pages/work/photos.twig",
                         "data" : "http://local.hybrid-php.com/data/photos.json",
                         "name" : "Photos 2"
                     },
                     {
-                        "id" : "photos_2" ,
+                        "id" : "work" ,
                         "path": "/3",
                         "view": "pages/work/photos.twig",
                         "data" : "http://local.hybrid-php.com/data/photos.json",

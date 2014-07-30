@@ -70,15 +70,22 @@ class AppMediator extends AbstractViewMediator
 
 
 
-    gotoView: (view) ->
+    gotoView: (view) =>
 
-        section = @getSectionByPath "/"+view
-        if section.model.get("assetsLoaded")
-            @onSectionLoaded(section)
+        console.log view
+
+        @navigation.updateUI view
+        section = @getSectionByPath "/#{view}"
+
+        if section?
+            if section.model.get("assetsLoaded")
+                @onSectionLoaded(section)
+            else
+                section.on "assetsLoaded" , @onSectionLoaded
+                section.on "dataLoaded" , @onSectionData
+                section.model.fetch()
         else
-            section.on "assetsLoaded" , @onSectionLoaded
-            section.on "dataLoaded" , @onSectionData
-            section.model.fetch()
+            throw new Error("Section Undefined")
 
 
 
