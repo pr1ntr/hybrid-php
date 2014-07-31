@@ -1,0 +1,96 @@
+
+
+{% extends ajax == false ? "_main.twig" : "../../_ajax.twig" %}
+{% if ajax == false %}
+    {% import  "global/macros/_linklist.twig" as macros %}
+{% else %}
+    {% import  "../../global/macros/_linklist.twig" as macros %}
+{% endif %}
+
+
+
+
+
+{% block content %}
+
+    <h1>{{ content.title }}</h1>
+    <h2>
+        manifest.json
+    </h2>
+    <ul class="pretty-list">
+        <li><b>name</b> - Name of your app</li>
+        <li><b>hostname</b> - Hostname of server this app runs (eg., local.hybrid-php.com). Should match your vhost setup</li>
+        <li><b>doc_root</b> - Application document root (location of
+            index.php).</li>
+
+        <li>
+            <b>config</b>
+
+            <ul class="pretty-list">
+                <li>
+                    <b>source</b>
+
+                    <ul class="pretty-list">
+                        <li><b>css</b> - Location of source stylus files</li>
+
+                        <li><b>js</b> - Location of main.coffee which is the
+                            bootstrap for the application.</li>
+
+                        <li><b>images</b> - Location of source images to be
+                            optimized. Dump assets in here</li>
+
+                        <li><b>templates</b> - Location of the global scripts
+                            template. This gets transformed to match the name of the
+                            project's script files</li>
+
+                        <li><b>fonts</b> - Location of fonts downloaded by vendor
+                            scripts and self hosted web fonts</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <b>deploy</b>
+
+                    <ul class="pretty-list">
+                        <li><b>css</b> - Location of compiled css relative to
+                            "doc_root"</li>
+
+                        <li><b>js</b> - Location of compiled javascripts relative
+                            to "doc_root"</li>
+
+                        <li><b>images</b> - Location of optimized images relative
+                            to "doc_root"</li>
+                    </ul>
+                </li>
+
+                <li><b>cdn</b> - Locations of the cdn absolute paths. One for dev
+                    and one for production.</li>
+
+                <li><b>templates</b> - Location of templates folder</li>
+
+                <li>
+                    <b>paths</b>
+
+                    <ul class="pretty-list">
+                        <li><b>id (required)</b> - ID of the path</li>
+
+                        <li><b>name (required)</b> - Name of path</li>
+
+                        <li><b>path (required)</b> - Route to this path</li>
+
+                        <li><b>view (optional)</b> - Location of view relative to
+                            templates folder in config. If omitted then the view will
+                            not behave as a route and will just be a menu item</li>
+
+                        <li><b>paths (optional)</b> - Can be another paths array.
+                            These paths will inherit their parents route</li>
+
+                        <li><b>sectionClass (optional)</b> - Defines the class name
+                            in the javascript to load for this</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    {#{{ macros.plainList(content.manifest) }} this doesn't work in twig.js :( #}
+{% endblock %}

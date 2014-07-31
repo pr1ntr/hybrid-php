@@ -1,22 +1,48 @@
 {% macro  linkList(routes, root, class, containerClass) %}
     {% import _self as macros %}
-<div class="{{ containerClass }}">
-    <ul data-route="{{ root }}" class="{{ class }}">
-        {% for route in routes %}
-            <li data-route="{{ route.path }}" class="nav-item">
-                {% if(route.view) %}
-                <a href="{{ root ~ route.path }}">{{ route.name }}</a>
-                {% else %}
-                <span>{{ route.name }}</span>
-                {% endif %}
-                {% if route.paths %}
+    <div class="{{ containerClass }}">
+        <ul data-route="{{ root }}" class="{{ class }}">
+            {% for route in routes %}
+                <li data-route="{{ route.path }}" class="nav-item">
+                    {% if(route.view) %}
+                    <a href="{{ root ~ route.path }}">{{ route.name }}</a>
+                    {% else %}
+                    <span>{{ route.name }}</span>
+                    {% endif %}
+                    {% if route.paths %}
 
-                    {{  macros.linkList(route.paths, route.path, "link-list w960")  }}
-                {% endif %}
-            </li>
+                        {{  macros.linkList(route.paths, route.path, "link-list w960")  }}
+                    {% endif %}
+                </li>
 
-        {% endfor %}
-    </ul>
-</div>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endmacro %}
+
+
+{% macro  plainList(items) %}
+    {% import _self as macros %}
+
+
+        <ul  class="pretty-list">
+            {% for k,item in items %}
+
+                <li>
+
+                   <b>{{ k }}</b>{% if item is not iterable %} - {{ item }}
+                    {%  else  %}
+                    {{ macros.plainList(item) }}
+                    {%  endif %}
+
+
+
+                </li>
+
+            {% endfor %}
+        </ul>
+
+
 
 {% endmacro %}

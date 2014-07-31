@@ -1,0 +1,99 @@
+
+
+{% extends ajax == false ? "_main.twig" : "../../_ajax.twig" %}
+{% if ajax == false %}
+    {% import  "global/macros/_linklist.twig" as macros %}
+{% else %}
+    {% import  "../../global/macros/_linklist.twig" as macros %}
+{% endif %}
+
+
+
+
+
+{% block content %}
+
+    <h1>{{ content.title }}</h1>
+    <h3>
+        src/app/main.coffee
+    </h3>
+    <p>
+        Application bootstrap file. Just instantiates the main application.
+    </p>
+
+    <h2>App</h2>
+
+    <h3>
+        src/app/com/HybridApp.coffee
+    </h3>
+    <p>
+        Extends Backbone.Router
+    </p>
+    <p>
+        Acts as application routing. Uses a wildcard router. The AppMediator will handle the specific section transitions.
+    </p>
+
+    <h2>Views</h2>
+
+    <h3>
+        src/app/com/view/AppMediator.coffee
+    </h3>
+    <p>
+        Extends Backbone.View
+    </p>
+    <p>
+        Handles transitions between sections. Sets up Navigation.
+    </p>
+
+
+    <h3>
+        src/app/com/view/SectionView.coffee
+    </h3>
+    <p>
+        Extends AbstractView
+    </p>
+    <p>
+        Defines transition animations and other view behaviors
+    </p>
+
+
+    <h3>
+        src/app/com/abstract/AbstractView.coffee
+    </h3>
+    <p>
+        Extends Backbone.View
+    </p>
+    <p>
+        Gives the view rendering capability for twig templates.
+    </p>
+
+    <h2>Model</h2>
+
+    <h3>
+        src/app/com/model/AppModel.coffee
+    </h3>
+    <p>
+        Extends AbstractModel
+    </p>
+    <p>
+        Handles any application wide logic. Could be used to handle states between sections.
+    </p>
+
+    <h3>
+        src/app/com/abstract/AbstractModel.coffee
+    </h3>
+    <p>
+        Extends Backbone.Model
+    </p>
+    <p>
+        Handles parsing for assets. Triggers 3 events: "dataLoaded", "assetsProgress" and "assetsLoaded".
+    </p>
+
+
+
+
+
+
+
+
+{% endblock %}

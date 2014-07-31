@@ -1,4 +1,4 @@
-AbstractViewMediator = require "../abstract/AbstractViewMediator.coffee"
+
 AbstractModel = require "../abstract/AbstractModel.coffee"
 
 
@@ -8,7 +8,7 @@ Views["NavigationView"] = require "./NavigationView.coffee"
 Views["SectionView"] = require "./SectionView.coffee"
 
 
-class AppMediator extends AbstractViewMediator
+class AppMediator extends Backbone.View
 
     constructor: (opts) ->
         super(opts)
@@ -35,6 +35,8 @@ class AppMediator extends AbstractViewMediator
                 template: @model.preloader.getResult(route.id)
                 model: new AbstractModel
                     url: root + route.path
+
+            console.log root + route.path , route.id
             section.model.attributes.path = root + route.path
             section.model.attributes.view = route.view
 

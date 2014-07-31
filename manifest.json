@@ -1,0 +1,84 @@
+{
+    "name": "hybrid-php",
+    "hostname" : "local.hybrid-php.com",
+    "doc_root" : "app/",
+    "config":
+    {
+        "source" : {
+            "css" : "src/stylus/",
+            "js" : "src/app/",
+            "images" : "src/images/",
+            "templates" : "src/templates/",
+            "fonts" : "src/fonts/"
+        },
+        "deploy" : {
+            "css" : "css/",
+            "js" : "js/",
+            "images" : "images/"
+        },
+        "cdn" : {
+            "dev": {
+                "cdn_root": "/"
+            },
+            "prod": {
+                "cdn_root": "/"
+            }
+        },
+        "templates" : {
+            "folder" : "templates/"
+        },
+        "paths": [
+            {
+                "id" : "index" ,
+                "path": "/home",
+                "name" : "Intro",
+                "paths" : [
+                    {
+                        "id" : "about" ,
+                        "path": "/",
+                        "view": "pages/home/about.twig",
+                        "data" : "/data/about.json",
+                        "name" : "about"
+                    },
+                    {
+                        "id" : "setup" ,
+                        "path": "/setup",
+                        "view": "pages/home/setup.twig",
+                        "data" : "/data/setup.json",
+                        "name" : "setup"
+                    }
+                ]
+            },
+            {
+                "id" : "documentation",
+                "path": "/docs",
+                "paths" : [
+                    {
+                        "id" : "manifest" ,
+                        "path": "/manifest",
+                        "view": "pages/documentation/manifest.twig",
+                        "data" : "/data/manifest.json",
+                        "name" : "Manifest"
+                    },
+                    {
+                        "id" : "server" ,
+                        "path": "/server",
+                        "view": "pages/documentation/server.twig",
+                        "data" : "/data/server.json",
+                        "name" : "Server"
+                    },
+                    {
+                        "id" : "client" ,
+                        "path": "/client",
+                        "view": "pages/documentation/client.twig",
+                        "data" : "/data/client.json",
+                        "name" : "Client"
+                    }
+                ],
+                "name" : "Documentation",
+                "sectionClass" : "SectionView"
+            }
+        ]
+    }
+
+}

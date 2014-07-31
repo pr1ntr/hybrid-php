@@ -1,30 +1,15 @@
 
-{% extends ajax == false ? "_main.twig" : "../_ajax.twig" %}
+{% extends ajax == false ? "_main.twig" : "../../_ajax.twig" %}
 
 {% block content %}
 
-<h1>{{ content.title }}</h1>
-<p>
-    {{ content.intro }}
-</p>
-<h2>TECHNOLOGY</h2>
-<p>Hybrid-PHP operates on a standard lamp server running php 5.5. It could probably run on 5.3 too but I never tested it.</p>
-<p>A list of libraries used:</p>
-<ul id="libraries" class="plain-list">
-    <li><b>Server-Side</b></li>
-    <li>Composer</li>
-    <li>SLIM</li>
-    <li>TWIG</li>
-    <li><b>Client-Side</b></li>
-    <li>Browserify</li>
-    <li>Backbone.js</li>
-    <li>Greensock</li>
-    <li>PreloadJS</li>
-</ul>
-<h2>SETUP</h2>
+
+<h1>SETUP</h1>
 <h3>Hosts</h3>
+
 <p>Add this to your hosts file</p>
-<pre><code>127.0.0.1 local.hybrid-php.com</code></pre>
+<p><b>Note</b> - You can use any hostname you want. Just be sure to set it in the manifest.json</p>
+<pre><code> 127.0.0.1 local.hybrid-php.com</code></pre>
 <h3>Apache Vhost</h3>
 <p>Add this to your vhosts configuration (httpd.conf)</p>
 <pre>
@@ -43,12 +28,13 @@
     &#x3C;/VirtualHost&#x3E;
     </code>
 </pre>
-<h3>INITIALIZATION</h3>
+
+<h3>Initialization</h3>
 <p>Install npm packages</p>
 <pre><code>npm install</code></pre>
 <p>Install bower packages</p>
 <pre><code>bower install</code></pre>
-<h3>COMMANDS</h3>
+<h3>Commands</h3>
 <p>Copy bower packages to source directory</p>
 <pre><code>grunt bower</code></pre>
 <p>Run grunt in development mode</p>

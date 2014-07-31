@@ -1,7 +1,8 @@
 
 
 nav
-
+  subNavHeight = 55px
+  subFontSize = 18px
   navHeight = 80px
   fontSize = 35px
   itemWidth = auto
@@ -17,6 +18,11 @@ nav
   animation-name: colorCycle;
   animation-iteration-count: infinite;
 
+  .submenu-bar
+    height: subNavHeight
+    background: white
+    width: 100%
+    margin-top:navHeight
 
   div
 
@@ -55,12 +61,13 @@ nav
           position: fixed
           left: 0
           top: navHeight
-          background: white
           width: 100%
+          visibility hidden
+          opacity 0
 
           > ul
-            subNavHeight = 55px
-            subFontSize = 18px
+
+
 
 
 
@@ -75,8 +82,6 @@ nav
               float:left
               line-height:subNavHeight
               letter-spacing 0pt
-              visibility hidden
-              opacity 0
               transition:border .3s
               a , span
                 color:black

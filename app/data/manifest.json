@@ -1,0 +1,36 @@
+{
+    "title" : "APPLICATION MANIFEST",
+    "manifest" :{
+        "name": "Name of your app",
+        "hostname" : "Hostname of server this app runs (eg., local.hybrid-php.com)",
+        "doc_root" : "Application document root (location of index.php).",
+        "config":
+        {
+            "source" : {
+                "css" : "Location of source stylus files",
+                "js" : "Location of main.coffee which is the bootstrap for the application. ",
+                "images" : "Location of source images to be optimized. Dump assets in here",
+                "templates" : "Location of the global scripts template. This gets transformed to match the name of the project's script files",
+                "fonts" : "Location of fonts downloaded by vendor scripts and self hosted web fonts"
+            },
+            "deploy" : {
+                "css" : "Location of compiled css relative to \"doc_root\"",
+                "js" : "Location of compiled javascripts relative to \"doc_root\"",
+                "images" : "Location of optimized images relative to \"doc_root\""
+            },
+            "cdn" : "Locations of the cdn absolute paths. One for dev and one for production.",
+            "templates" : "Location of templates folder",
+            "paths":
+                {
+                    "id (required)" : "ID of the path",
+                    "name (required)"  : "Name of path",
+                    "path (required)": "Route to this path",
+                    "view (optional)": "Location of view relative to templates folder in config. If omitted then the view will not behave as a route and will just be a menu item",
+                    "paths (optional)" : "Can be another paths array. These paths will inherit their parents route",
+                    "sectionClass (optional)" : "Defines the class name in the javascript to load for this "
+               }
+
+        }
+    }
+
+}

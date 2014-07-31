@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
     grunt.initConfig({
-        app: grunt.file.readJSON('hybrid-app.json'),
+        app: grunt.file.readJSON('manifest.json'),
         stylus: {
             dist: {
                 options: {

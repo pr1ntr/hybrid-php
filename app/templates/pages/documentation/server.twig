@@ -1,0 +1,32 @@
+
+
+{% extends ajax == false ? "_main.twig" : "../../_ajax.twig" %}
+{% if ajax == false %}
+    {% import  "global/macros/_linklist.twig" as macros %}
+{% else %}
+    {% import  "../../global/macros/_linklist.twig" as macros %}
+{% endif %}
+
+
+
+
+
+{% block content %}
+
+    <h1>{{ content.title }}</h1>
+    <h3>
+        app/index.php
+    </h3>
+    <p>
+        Application entry point. Creates and configures the SLIM application to pass into the DynamicRouter
+    </p>
+
+    <h3>
+        com/DynamicRouter.php
+    </h3>
+    <p>
+        The Dynamic router reads in the manifest and assigns all the routes from the paths object. PHPDoc can be found in /com/DynamicRouter.php.
+    </p>
+
+
+{% endblock %}

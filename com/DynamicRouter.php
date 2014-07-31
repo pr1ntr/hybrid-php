@@ -16,13 +16,19 @@ class DynamicRouter {
     private $data;
     private $app;
     private $debug = true;
+    private static $hostname;
 
+    /**
+     * @param $data
+     * @param $app
+     * Class Constructor. Initializs the DynamicRouter
+     */
     public function __construct($data, $app) {
         $this->data = $data;
         $this->app = $app;
         $this->debug = $app->config('debug');
         $this->tree = $this->data->config->paths;
-
+        DynamicRouter::$hostname = $data->hostname;
 
         $this->createApiRoutes();
         $this->createRoutes();
@@ -34,6 +40,7 @@ class DynamicRouter {
      * @param $paths
      * @param $data
      * @return mixed
+     * Recursive function for creating specialized router data for data api.
 
      */
     private function createRouteObject($paths, $data)
@@ -50,7 +57,9 @@ class DynamicRouter {
         }
         return $data;
     }
-
+    /**
+    * Creates data api route for front-end application
+    */
     private function createApiRoutes() {
         $data = array();
 
@@ -69,14 +78,27 @@ class DynamicRouter {
         });
     }
 
+    /**
+     * Initializes routes with the path tree
+     * Sets /+ wildcard url redirect anything not defined to the first route (hard coded for now)
+     */
+
     private function createRoutes() {
         $this->setRoutes($this->tree, $this->app);
+
+        $app = $this->app;
+
+        $app->get("/+" , function () use ($app) {
+            $app->redirect('/home');
+        });
+
     }
 
     /**
      * @param $appPaths
      * @param $app
      * @param $parent
+     * Recursive function to iterating through path tree to create main application routes
      */
     private function setRoutes($appPaths, $app, $parent = array())
     {
@@ -103,7 +125,7 @@ class DynamicRouter {
                     $request = $app->request;
                     $isAjax = $request->isAjax();
                     $data = DynamicRouter::getData($data);
-                    $data['content']->id = $id;
+                    $data['content']['id'] = $id;
                     $data['name'] = $path->name;
                     if (!$isAjax) {
                         $data = array_merge($data, array("routes" => $tree));
@@ -119,37 +141,44 @@ class DynamicRouter {
         }
     }
 
-    private static function getData($data, $params = array()) {
+    /**
+     * @param $data
+     * @param array $params
+     * @return array
+     * Uses curl to request data. Data is converted to Association Arrays.
+     */
+    private static function getData($url, $params = array()) {
 
         //To Do
         //If Needed, parse params into supplanted fields of call
 
         $response = array(
             "status"=>"success",
-            "content"=>$data
+            "content"=>array()
         );
 
-        $url = filter_var($data, FILTER_VALIDATE_URL);
-        if(isset($url) && $url !== false) {
-            if($data) {
-                try {
-                    $ch = curl_init($data);
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                        "Content-Type: application/json"
-                    ));
-                    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); //Turn this on once the server is live
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-                    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT ,15); //This can change.
+        if(!filter_var($url, FILTER_VALIDATE_URL)){
+            $url = "http://".DynamicRouter::$hostname.$url;
+        }
 
-                    $result = curl_exec($ch);
-                    $result = json_decode($result);
+        if($url) {
+            try {
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    "Content-Type: application/json"
+                ));
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); //Turn this on once the server is live
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT ,15); //This can change.
 
-                    $response['status'] = "success";
-                    $response['content'] = $result;
-                } catch (Exception $e) {
-                    $response['status'] = "error";
-                    $response['content'] = $e;
-                }
+                $result = curl_exec($ch);
+                $result = json_decode($result , true);
+
+                $response['status'] = "success";
+                $response['content'] = $result;
+            } catch (Exception $e) {
+                $response['status'] = "error";
+                $response['content'] = $e;
             }
         }
 

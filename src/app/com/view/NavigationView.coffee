@@ -43,20 +43,26 @@ class NavigationView extends AbstractView
 
 
     showSubMenu: (dataRoute) ->
-        subMenu = @$el.find("ul[data-route='#{dataRoute}']")
+        subMenu = @$el.find("ul[data-route='#{dataRoute}']").parent()
         if subMenu?
-            TweenMax.staggerTo subMenu.find("li") , .3 ,
+            subMenu.data("active", true)
+            TweenMax.to subMenu ,.3 ,
                 autoAlpha:1
-            ,
-                .2
+                overwrite:"all"
+
 
     hideSubMenus: () ->
-        subMenu = @$el.find("ul.link-list")
+        subMenu = @$el.find("ul.link-list").parent()
+        console.log(subMenu)
         if subMenu?
-            TweenMax.staggerTo subMenu.find("li") , .3 ,
-                autoAlpha:0
-            ,
-                .2
+            subMenu.each ->
+                if $(@).data("active")
+                    $(@).data("active", false)
+                    TweenMax.to @ ,.3 ,
+                        autoAlpha:0
+
+
+
 
 
     activateItem: (dataRoute) ->
@@ -65,7 +71,6 @@ class NavigationView extends AbstractView
 
     deactivateItems: () ->
         lis = @$el.find("li.nav-item")
-        console.log lis
         lis.removeClass("active")
 
 
@@ -74,7 +79,7 @@ class NavigationView extends AbstractView
     updateUI: (path) ->
 
         paths = path.split("/")
-
+        console.log path
         @hideSubMenus()
         @deactivateItems()
 
