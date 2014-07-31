@@ -1,5 +1,6 @@
-{% macro  linkList(routes, root, class) %}
+{% macro  linkList(routes, root, class, containerClass) %}
     {% import _self as macros %}
+<div class="{{ containerClass }}">
     <ul data-route="{{ root }}" class="{{ class }}">
         {% for route in routes %}
             <li data-route="{{ route.path }}" class="nav-item">
@@ -10,11 +11,12 @@
                 {% endif %}
                 {% if route.paths %}
 
-                    {{  macros.linkList(route.paths, route.path, "link-list")  }}
+                    {{  macros.linkList(route.paths, route.path, "link-list w960")  }}
                 {% endif %}
             </li>
 
         {% endfor %}
     </ul>
+</div>
 
 {% endmacro %}

@@ -58,7 +58,14 @@ module.exports = function(grunt) {
           dev: {
             dest: 'src/vendor',
             js_dest: 'src/vendor/js',
-            css_dest: 'src/vendor/css'
+            css_dest: 'src/vendor/css',
+            options: {
+              packageSpecific: {
+                bootstrap: {
+                  dest : "src/fonts"
+                }
+              }
+            }
           }
         },
 
@@ -144,6 +151,13 @@ module.exports = function(grunt) {
                         src: ["**"],
                         dest: "<%= app.doc_root + app.config.templates.folder %>",
                         filter: 'isFile'
+                    },
+                    {
+                        expand:true,
+                        cwd: "<%= app.config.source.fonts %>",
+                        src: ["**"],
+                        dest: "<%= app.doc_root + app.config.deploy.css %>/fonts",
+                        filter: 'isFile'
                     }
 
                 ],
@@ -169,6 +183,13 @@ module.exports = function(grunt) {
                         cwd: "<%=  app.config.source.templates %>",
                         src: ["**"],
                         dest: "<%= app.doc_root + app.config.templates.folder %>",
+                        filter: 'isFile'
+                    },
+                    {
+                        expand:true,
+                        cwd: "<%= app.config.source.fonts %>",
+                        src: ["**"],
+                        dest: "<%= app.doc_root + app.config.deploy.css %>/fonts",
                         filter: 'isFile'
                     }
 
@@ -242,9 +263,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-browserify');
 
-    
-    grunt.registerTask('setup', ['bower' , 'dev']);
-    grunt.registerTask('deploy', ['bower' , 'dist']);
+
 
     grunt.registerTask('default', ['jshint', 'concat',"browserify",'stylus:dev', 'newer:copy:dev', 'watch' ]);
     grunt.registerTask('dev', ['default']);

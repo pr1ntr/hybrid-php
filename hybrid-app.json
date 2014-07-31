@@ -8,7 +8,8 @@
             "css" : "src/stylus/",
             "js" : "src/app/",
             "images" : "src/images/",
-            "templates" : "src/templates/"
+            "templates" : "src/templates/",
+            "fonts" : "src/fonts/"
         },
         "deploy" : {
             "css" : "css/",
@@ -31,13 +32,11 @@
                 "id" : "index" ,
                 "path": "/",
                 "view": "pages/index.twig",
-                "name" : "Home",
-                "data" : {
-
-                }
+                "name" : "Intro",
+                "data" : "http://local.hybrid-php.com/data/introduction.json"
             },
             {
-                "id" : "work",
+                "id" : "documentation",
                 "path": "/work",
                 "paths" : [
                     {
@@ -62,7 +61,7 @@
                         "name" : "Photos 3"
                     }
                 ],
-                "name" : "Work",
+                "name" : "Documentation",
                 "sectionClass" : "SectionView"
             },
             {

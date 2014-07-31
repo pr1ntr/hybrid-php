@@ -1,5 +1,5 @@
 {
-  "name": "starter",
+  "name": "pappy",
   "version": "0.5.1",
   "authors": [
     "Pavel <d4rklit3@gmail.com>"
@@ -22,5 +22,6 @@
     "twig.js": "~0.7.2",
     "greensock": "~1.12.1",
     "PreloadJS": "*"
+
   }
 }

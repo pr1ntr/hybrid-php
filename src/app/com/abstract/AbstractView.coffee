@@ -17,7 +17,14 @@ class AbstractView extends Backbone.View
     render: ->
         @getTemplate()
         view = @template.render(@model.attributes)
-        @$el.empty().html(view);
+        $viewEl = @$el.find(".view")
+
+        console.log $viewEl
+
+        if $viewEl.length > 0
+            $viewEl.empty().html(view)
+        else
+            @$el.empty().html(view);
 
 
 

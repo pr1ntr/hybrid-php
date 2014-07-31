@@ -1,11 +1,21 @@
-AbstractViewMediator = require "../abstract/AbstractViewMediator.coffee"
+AbstractView = require "../abstract/AbstractView.coffee"
 
-class NavigationView extends AbstractViewMediator
+class NavigationView extends AbstractView
 
-    start: ->
+    initialize: (opts) ->
+        super(opts)
+
+        ###window.addEventListener("scroll" , @onScroll)
+        @onScroll();###
 
 
-    gotoView: (view) ->
+
+    onScroll: =>
+        console.log "scroll"
+        if window.scrollY > @$el.height()
+            @$el.addClass("black")
+        else
+            @$el.removeClass("black")
 
 
     events:

@@ -4,7 +4,7 @@ nav
 
   navHeight = 80px
   fontSize = 35px
-  itemWidth = 150px
+  itemWidth = auto
 
   display block
   width:100%
@@ -12,72 +12,77 @@ nav
   padding 0 0 0 0
   position fixed
   top:0
+  background $red
+  animation-duration: 15s;
+  animation-name: colorCycle;
+  animation-iteration-count: infinite;
 
 
+  div
 
+    > ul
 
-  > ul
+      > li
+        line-height: navHeight
+        text-align center
+        letter-spacing:-2.2pt
 
-    > li
-      line-height: navHeight
-      text-align center
-      letter-spacing:-2.2pt
-
-    li
-      padding:0px 10px 0px 10px
-      float:left
-      font-size:fontSize
-      height:navHeight
-      color:#eaeaea
-      font-weight:200
-      text-transform:uppercase
-      width: itemWidth
-      cursor:pointer
-      position:relative
-      transition: border .3s
-
-
-      &.active
-        border-bottom:12px #ffffff solid
-
-
-
-      a , span
-        text-decoration:none
-        color:white
+      li
+        padding:0px 10px 0px 10px
+        float:left
+        font-size:fontSize
+        height:navHeight
+        color:#eaeaea
+        font-weight:200
+        text-transform:uppercase
+        width: itemWidth
         cursor:pointer
+        position:relative
+        transition: border .3s
 
-      > ul
-        subNavHeight = 55px
-        subFontSize = 18px
 
-        width:100%
-        position:fixed
-        top: navHeight
-        height:subNavHeight
-        left: 0
-        background: white
+        &.active
+          border-bottom:12px #ffffff solid
 
 
 
+        a , span
+          text-decoration:none
+          color:white
+          cursor:pointer
 
-        > li
-          width:itemWidth
-          font-size:subFontSize
-          height:subNavHeight
-          text-align:center
-          font-weight:200
-          float:left
-          line-height:subNavHeight
-          letter-spacing 0pt
-          visibility hidden
-          opacity 0
-          transition:border .3s
-          a , span
-            color:black
+        > div
+          position: fixed
+          left: 0
+          top: navHeight
+          background: white
+          width: 100%
 
-          &.active
-            border-bottom:12px #333333 solid
+          > ul
+            subNavHeight = 55px
+            subFontSize = 18px
+
+
+
+
+
+            > li
+              width:itemWidth
+              font-size:subFontSize
+              height:subNavHeight
+              text-align:center
+              font-weight:200
+              float:left
+              line-height:subNavHeight
+              letter-spacing 0pt
+              visibility hidden
+              opacity 0
+              transition:border .3s
+              a , span
+                color:black
+
+              &.active
+                border-bottom:12px #333333 solid
 
 
 

@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hybrid SPA App</title>
+    <title>Hybrid SPA</title>
     {% include "global/_scripts.twig" %}
 </head>
 <body>
 {% include "global/_navigation.twig" %}
-<div id="content" class="content-container">
-    <div id="{{ content.id }}">
-    {% block content  %}
-    {% endblock %}
+<div class="content-container" id="content" >
+    <div class="w960 view">
+        <div id="{{ content.id }}">
+            {% block content  %}
+            {% endblock %}
+        </div>
     </div>
 </div>
+
 
 </body>
 </html>

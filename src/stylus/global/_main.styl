@@ -3,7 +3,7 @@ $red = #ba5858
 $orange = rgb(219,175,69)
 $green = rgb(164,219,69)
 $blue = rgb(69,145,219)
-$violet = rgb(145i,113,182)
+$violet = rgb(145,113,182)
 
 li
   list-style:none
@@ -23,6 +23,8 @@ body
 
 
 
+
+
 @keyframes colorCycle
   20%
     background $red
@@ -38,25 +40,98 @@ body
 
 
 .content-container
-  margin:150px 0 0 0
-  padding: 0 0 0 20px
+  margin:150px 0 60px 0
+  padding: 30px 0 30px 20px
   opacity:0
   visibility:hidden
-  background:white
   width:100%
   color: #999999
+  background white
 
+.view
+  > div
+    max-width:720px
 
 h1
   text-transform uppercase
-  font-size 80px
+  font-size 40px
   font-weight:100
-  letter-spacing:-4.2pt
+  letter-spacing:-1.2pt
+  padding-bottom:20px
+
+h2
+  text-transform uppercase
+  font-size 32px
+  font-weight:100
+  letter-spacing:-.6pt
+  padding-bottom:18px
+
+h3
+  text-transform uppercase
+  font-size 24px
+  font-weight:100
+  letter-spacing:-.3pt
+  padding-bottom:18px
+
+h4
+  text-transform uppercase
+  font-size 20px
+  font-weight:100
+  padding-bottom:18px
+
+pre
+  padding:3px
+  background: #e7e7e7
+  border-radius 3px
+  margin:0 30px 10px 0
+  border:1px solid #d0d0d0
+
+
+  code
+    margin: 0
+    padding: 0
+    background-color: transparent
+    border: none
+    word-wrap: normal
+    max-width: initial
+    display: inline
+    overflow: initial
+    line-height: inherit
+    font-family:Courier, monospace
+    font-size:14px
+
+ul.plain-list
+  padding-left:30px
+  padding-bottom:10px
+
+
+  > li
+
+    letter-spacing:.5pt
+    padding-bottom:3px
+    list-style:disc
+
+
 
 
 p
-  padding:5px
-  width:720px
+  padding-left:2px
+  padding-bottom:10px
+
+.w960
+  width:960px
+  margin-left: auto
+  margin-right: auto
+
+
+
+
+
+
+
+
+
+
 
 
 .xdebug-var-dump
