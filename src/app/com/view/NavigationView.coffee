@@ -53,7 +53,6 @@ class NavigationView extends AbstractView
 
     hideSubMenus: () ->
         subMenu = @$el.find("ul.link-list").parent()
-        console.log(subMenu)
         if subMenu?
             subMenu.each ->
                 if $(@).data("active")

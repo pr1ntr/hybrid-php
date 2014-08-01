@@ -36,7 +36,6 @@ class AppMediator extends Backbone.View
                 model: new AbstractModel
                     url: root + route.path
 
-            console.log root + route.path , route.id
             section.model.attributes.path = root + route.path
             section.model.attributes.view = route.view
 
